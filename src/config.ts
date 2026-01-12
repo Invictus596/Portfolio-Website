@@ -1,0 +1,36 @@
+export const config = {
+  developer: {
+    name: "Abdul Khader",
+    title: "Data Science & Machine Learning Enthusiast",
+    bio: "Student from Hyderabad, India, passionate about Data Science, Machine Learning, and Web Development. Exploring tech frontiers like Cybersecurity and Blockchain. Currently learning SQL, advanced Python for data science, and modern web development frameworks.",
+    avatar: "/profilecircular.png",
+  },
+  social: {
+    github: "invictus596",
+    email: "abdulkhader.dev@gmail.com",
+    location: "Hyderabad, India",
+  },
+  skills: [
+    { name: "Python", icon: "python" },
+    { name: "JavaScript", icon: "javascript" },
+    { name: "TypeScript", icon: "typescript" },
+    { name: "SQL", icon: "mysql" },
+    { name: "C", icon: "c" },
+    { name: "Java", icon: "java" },
+    { name: "Node.js", icon: "nodejs" },
+    { name: "React", icon: "react" },
+    { name: "HTML", icon: "html" },
+    { name: "Git", icon: "git" },
+    { name: "Linux", icon: "linux" },
+    { name: "Pandas", icon: "pandas" },
+    { name: "NumPy", icon: "numpy" },
+    { name: "Matplotlib", icon: "matplotlib" },
+    { name: "Scikit-learn", icon: "scikitlearn" },
+    { name: "Web Development", icon: "webdev" },
+    { name: "Data Science", icon: "datascience" },
+    { name: "Machine Learning", icon: "ml" },
+    { name: "Blockchain", icon: "blockchain" },
+    { name: "Cybersecurity", icon: "cybersecurity" },
+  ],
+};
+
