@@ -11,51 +11,37 @@ import {
 const colorReg = (prefix: string) => new RegExp("^" + prefix + "-([0-9a-z]+)(/(\\d+))?$");
 
 const colorAttr = (prefix: string, [, color, , opacity]: RegExpMatchArray) => {
-  let lightColor = "",
-    darkColor = "";
-
   if (["black", "white"].includes(color)) {
-    lightColor = color;
-    darkColor = color === "white" ? "gray-950" : "gray-50";
-  } else {
-    lightColor = `gray-${color}`;
-    darkColor = `gray-${(
-      (+color === 900 || +color === 50 ? 950 : 900) - +color
-    ).toString()}`;
+    const attr = `${prefix}-${color}${opacity ? "/" + opacity : ""}`;
+    const darkVal = color === "white" ? "ctp-950" : "ctp-50";
+    const darkAttr = `${prefix}-${darkVal}${opacity ? "/" + opacity : ""}`;
+    return `${attr} dark:${darkAttr}`;
   }
-
-  const attr = `${prefix}-${lightColor}${opacity ? "/" + opacity : ""}`;
-  const darkAttr = `${prefix}-${darkColor}${opacity ? "/" + opacity : ""}`;
-
+  const attr = `${prefix}-gray-${color}${opacity ? "/" + opacity : ""}`;
+  const inverted = (+color === 900 || +color === 50 ? 950 : 900) - +color;
+  const darkAttr = `${prefix}-ctp-${inverted}${opacity ? "/" + opacity : ""}`;
   return `${attr} dark:${darkAttr}`;
 };
 
 export default defineConfig({
   theme: {
     colors: {
-      gray: {
-        50: "rgb(var(--c-gray-50))",
-        100: "rgb(var(--c-gray-100))",
-        200: "rgb(var(--c-gray-200))",
-        300: "rgb(var(--c-gray-300))",
-        400: "rgb(var(--c-gray-400))",
-        500: "rgb(var(--c-gray-500))",
-        600: "rgb(var(--c-gray-600))",
-        700: "rgb(var(--c-gray-700))",
-        800: "rgb(var(--c-gray-800))",
-        900: "rgb(var(--c-gray-900))",
-        950: "rgb(var(--c-gray-950))"
-      },
-      blue: {
-        DEFAULT: "rgb(var(--c-blue))",
-        500: "rgb(var(--c-blue))"
-      },
-      red: {
-        DEFAULT: "rgb(var(--c-red))",
-        500: "rgb(var(--c-red))"
+      ctp: {
+        50: "rgb(var(--ctp-50))",
+        100: "rgb(var(--ctp-100))",
+        200: "rgb(var(--ctp-200))",
+        300: "rgb(var(--ctp-300))",
+        400: "rgb(var(--ctp-400))",
+        500: "rgb(var(--ctp-500))",
+        600: "rgb(var(--ctp-600))",
+        700: "rgb(var(--ctp-700))",
+        800: "rgb(var(--ctp-800))",
+        900: "rgb(var(--ctp-900))",
+        950: "rgb(var(--ctp-950))"
       }
     }
   },
+
   shortcuts: [
     ["flex-center", "flex items-center justify-center"],
     ["hstack", "flex items-center"],
