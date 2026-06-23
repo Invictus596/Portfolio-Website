@@ -4,7 +4,7 @@ const bear: BearData[] = [
   {
     id: "profile",
     title: "Profile",
-    icon: "i-fa-solid:paw",
+    icon: "i-ion:person",
     md: [
       {
         id: "about-me",

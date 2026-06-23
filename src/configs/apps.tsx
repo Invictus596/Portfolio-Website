@@ -10,13 +10,13 @@ const apps: AppsData[] = [
   },
   {
     id: "bear",
-    title: "Bear",
+    title: "Invictus",
     desktop: true,
     width: 860,
     height: 500,
     show: true,
     y: -40,
-    img: "img/icons/bear.png",
+    img: "favicon.png",
     content: <Bear />
   },
   {
