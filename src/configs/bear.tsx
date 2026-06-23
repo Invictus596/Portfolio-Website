@@ -35,12 +35,12 @@ const bear: BearData[] = [
     icon: "i-octicon:repo",
     md: [
       {
-        id: "portfolio-macos",
-        title: "Portfolio macOS",
-        file: "https://raw.githubusercontent.com/Renovamen/playground-macos/main/README.md",
+        id: "portfolio-website",
+        title: "Portfolio Website",
+        file: "https://raw.githubusercontent.com/Invictus596/Portfolio-Website/main/README.md",
         icon: "i-ri:gamepad-line",
-        excerpt: "macOS-style portfolio website simulating macOS GUI...",
-        link: "https://github.com/Renovamen/playground-macos"
+        excerpt: "macOS GUI-style portfolio website built with React, TypeScript, and Vite...",
+        link: "https://github.com/Invictus596/Portfolio-Website"
       },
       {
         id: "lan-tui",
