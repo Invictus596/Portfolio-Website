@@ -16,7 +16,7 @@ const colorAttr = (prefix: string, [, color, , opacity]: RegExpMatchArray) => {
 
   if (["black", "white"].includes(color)) {
     lightColor = color;
-    darkColor = color === "white" ? "black" : "white";
+    darkColor = color === "white" ? "gray-950" : "gray-50";
   } else {
     lightColor = `gray-${color}`;
     darkColor = `gray-${(
@@ -31,6 +31,31 @@ const colorAttr = (prefix: string, [, color, , opacity]: RegExpMatchArray) => {
 };
 
 export default defineConfig({
+  theme: {
+    colors: {
+      gray: {
+        50: "rgb(var(--c-gray-50))",
+        100: "rgb(var(--c-gray-100))",
+        200: "rgb(var(--c-gray-200))",
+        300: "rgb(var(--c-gray-300))",
+        400: "rgb(var(--c-gray-400))",
+        500: "rgb(var(--c-gray-500))",
+        600: "rgb(var(--c-gray-600))",
+        700: "rgb(var(--c-gray-700))",
+        800: "rgb(var(--c-gray-800))",
+        900: "rgb(var(--c-gray-900))",
+        950: "rgb(var(--c-gray-950))"
+      },
+      blue: {
+        DEFAULT: "rgb(var(--c-blue))",
+        500: "rgb(var(--c-blue))"
+      },
+      red: {
+        DEFAULT: "rgb(var(--c-red))",
+        500: "rgb(var(--c-red))"
+      }
+    }
+  },
   shortcuts: [
     ["flex-center", "flex items-center justify-center"],
     ["hstack", "flex items-center"],
