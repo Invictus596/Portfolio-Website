@@ -130,7 +130,7 @@ const Window = (props: WindowProps) => {
   const minimized = props.min
     ? "opacity-0 invisible transition-opacity duration-300"
     : "";
-  const border = props.max ? "" : "border border-ctp-500/30";
+  const border = props.max ? "" : "border border-gray-500/30";
   const width = props.max ? winWidth : state.width;
   const height = props.max ? winHeight : state.height;
   const disableMax = props.aspectRatio !== undefined;

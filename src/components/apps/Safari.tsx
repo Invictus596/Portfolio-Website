@@ -92,7 +92,7 @@ const NavPage = ({ width, setGoURL }: NavProps) => {
           </div>
           <div
             className={`h-16 w-full mt-4 grid ${grid} shadow-md rounded-xl text-sm`}
-            bg="gray-50/70 dark:ctp-600/50"
+            bg="gray-50/70 dark:gray-600/50"
           >
             <div className="col-start-1 col-span-1 flex-center space-x-2">
               <span className="i-fa-solid:shield-alt text-2xl" />

@@ -17,8 +17,8 @@ const TopBarItem = forwardRef(
   (props: TopBarItemProps, ref: React.ForwardedRef<HTMLDivElement>) => {
     const hide = props.hideOnMobile ? "hidden sm:inline-flex" : "inline-flex";
     const bg = props.forceHover
-      ? "bg-gray-100/30 dark:bg-ctp-600/40"
-      : "hover:(bg-gray-100/30 dark:bg-ctp-600/40)";
+      ? "bg-gray-100/30 dark:bg-gray-400/40"
+      : "hover:(bg-gray-100/30 dark:bg-gray-400/40)";
 
     return (
       <div
