@@ -124,5 +124,5 @@
 }
 
 .bear .markdown table tr {
-  @apply border-t border-gray-300 bg-transparent;
+  @apply border-t border-c-300 bg-transparent;
 }

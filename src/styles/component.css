@@ -100,7 +100,7 @@
 
 /* The slider */
 .switch-toggle .slider-toggle {
-  @apply absolute rounded-full bg-gray-400/50 inset-0 cursor-pointer duration-300;
+  @apply absolute rounded-full bg-c-400/50 inset-0 cursor-pointer duration-300;
 }
 
 .switch-toggle .slider-toggle:before {

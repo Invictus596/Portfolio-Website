@@ -97,7 +97,7 @@
 }
 
 .typora table tr:nth-child(2n + 1) {
-  @apply bg-neutral-200/80 dark:bg-gray-700/70;
+  @apply bg-c-200/70;
 }
 
 .typora table th,
@@ -123,7 +123,7 @@
 
 .typora :not(pre) > code,
 .typora pre {
-  @apply bg-neutral-200/80 dark:bg-gray-700/70 border border-c-300 rounded text-sm;
+  @apply bg-c-200/70 border border-c-300 rounded text-sm;
 }
 
 .typora :not(pre) > code {
