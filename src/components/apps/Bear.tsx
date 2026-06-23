@@ -199,7 +199,7 @@ const Bear = () => {
 
   const { winWidth } = useWindowSize();
   const isMobile = winWidth < 768;
-  const [view, setView] = useState<"sidebar" | "middlebar" | "content">("sidebar");
+  const [view, setView] = useState<"list" | "detail">("list");
 
   const setMidBar = (items: BearMdData[], index: number) => {
     setState({
@@ -220,88 +220,87 @@ const Bear = () => {
     });
   };
 
+  const openItem = (catIndex: number, itemIndex: number) => {
+    const items = bear[catIndex].md;
+    const item = items[itemIndex];
+    setState({
+      curSidebar: catIndex,
+      curMidbar: itemIndex,
+      midbarList: items,
+      contentID: item.id,
+      contentURL: item.file
+    });
+    setView("detail");
+  };
+
   if (isMobile) {
     return (
-      <div className="bear font-avenir h-full">
-        {view === "sidebar" && (
-          <div className="h-full flex flex-col bg-gray-700">
-            <div className="h-12 pr-3 hstack space-x-3 justify-end">
-              <span className="i-ic:baseline-cloud-off text-xl" />
-              <span className="i-akar-icons:settings-vertical text-xl" />
-            </div>
-            {bear.map((item, index) => (
-              <div
-                key={`mobile-sidebar-${item.id}`}
-                className={`flex items-center px-6 py-4 cursor-default ${
-                  state.curSidebar === index ? "bg-red-500" : "hover:bg-gray-600"
-                }`}
-                onClick={() => {
-                  setMidBar(item.md, index);
-                  setView("middlebar");
-                }}
-              >
-                <span className={item.icon} />
-                <span className="ml-3 text-lg">{item.title}</span>
+      <div className="bear font-avenir h-full flex flex-col bg-zinc-100 dark:bg-black">
+        {view === "list" ? (
+          <>
+            <div className="flex items-center justify-between px-4 h-12 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+              <span className="text-lg font-bold text-zinc-900 dark:text-white">Bear</span>
+              <div className="hstack space-x-4">
+                <span className="i-ic:baseline-cloud-off text-xl text-zinc-400" />
+                <span className="i-akar-icons:settings-vertical text-xl text-zinc-400" />
               </div>
-            ))}
-          </div>
-        )}
-        {view === "middlebar" && (
-          <div className="h-full flex flex-col" bg="gray-50 dark:gray-800">
-            <div className="sticky top-0 flex items-center h-12 px-4 border-b z-10" bg="gray-50 dark:gray-800" border="c-300">
-              <button
-                className="mr-3 text-xl cursor-default"
-                onClick={() => setView("sidebar")}
-              >
-                ‹
-              </button>
-              <span className="font-bold" text="gray-900 dark:gray-100">
-                {bear[state.curSidebar]?.title}
-              </span>
             </div>
-            {state.midbarList.map((item, index) => (
-              <div
-                key={`mobile-midbar-${item.id}`}
-                className={`flex flex-col px-4 py-3 cursor-default border-l-2 ${
-                  state.curMidbar === index
-                    ? "border-red-500 bg-white dark:bg-gray-900"
-                    : "border-transparent"
-                }`}
-                onClick={() => {
-                  setContent(item.id, item.file, index);
-                  setView("content");
-                }}
-              >
-                <div className="flex items-center">
-                  <span className={item.icon} />
-                  <span className="ml-2 font-bold" text="gray-900 dark:gray-100">
-                    {item.title}
-                  </span>
+            <div className="mx-3 mt-2 px-3 py-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/30">
+              <p className="text-amber-700 dark:text-amber-400 text-xs leading-relaxed">
+                For the best experience, please use a desktop device.
+              </p>
+            </div>
+            <div className="flex-1 overflow-auto px-3 mt-3 space-y-5 pb-6">
+              {bear.map((category, catIndex) => (
+                <div key={`section-${category.id}`}>
+                  <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5 px-1">
+                    {category.title}
+                  </p>
+                  <div className="rounded-xl overflow-hidden bg-white dark:bg-zinc-900 shadow-sm">
+                    {category.md.map((item, itemIndex) => (
+                      <div
+                        key={`row-${item.id}`}
+                        className={`flex items-center px-4 py-3.5 cursor-default active:bg-zinc-100 dark:active:bg-zinc-800 ${
+                          itemIndex < category.md.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
+                        }`}
+                        onClick={() => openItem(catIndex, itemIndex)}
+                      >
+                        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 mr-3 shrink-0">
+                          <span className={`${item.icon} text-zinc-600 dark:text-zinc-300`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-zinc-900 dark:text-white truncate">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+                            {item.excerpt}
+                          </p>
+                        </div>
+                        <span className="text-zinc-300 dark:text-zinc-600 ml-2 text-lg">›</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className="mt-1 text-sm" text="c-500">
-                  {item.excerpt}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-        {view === "content" && (
-          <div className="h-full flex flex-col" bg="gray-50 dark:gray-800">
-            <div className="sticky top-0 flex items-center h-12 px-4 border-b z-10" bg="gray-50 dark:gray-800" border="c-300">
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center h-12 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
               <button
-                className="mr-3 text-xl cursor-default"
-                onClick={() => setView("middlebar")}
+                className="flex items-center px-3 h-full text-blue-500 text-sm font-medium cursor-default"
+                onClick={() => setView("list")}
               >
-                ‹
+                ‹ Back
               </button>
-              <span className="font-bold" text="gray-900 dark:gray-100">
+              <span className="text-base font-semibold text-zinc-900 dark:text-white truncate pr-4">
                 {state.midbarList[state.curMidbar]?.title}
               </span>
             </div>
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-auto bg-white dark:bg-black">
               <Content contentID={state.contentID} contentURL={state.contentURL} />
             </div>
-          </div>
+          </>
         )}
       </div>
     );
