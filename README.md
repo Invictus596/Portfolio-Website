@@ -2,6 +2,8 @@
 
 My personalized macOS-style portfolio website: [invictus596-portfolio.vercel.app](https://invictus596-portfolio.vercel.app/)
 
+> **Note:** Planning to migrate from this macOS GUI style to a sleek, professional portfolio website.
+
 Inspired by [Renovamen/playground-macos](https://github.com/Renovamen/playground-macos)
 
 Powered by [React](https://reactjs.org/) + [Zustand](https://zustand-demo.pmnd.rs/) + [UnoCSS](https://uno.antfu.me/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/).
