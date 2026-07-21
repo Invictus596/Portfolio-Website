@@ -70,15 +70,15 @@
                 "url": "https://github.com/",
                 "user": "Invictus596"
             },
-            "facebook": {
+            "linkedin": {
                 "title": "LinkedIn profile",
-                "url": "https://linkedin.com/in/",
-                "user": "abdul-khader"
+                "url": "https://www.linkedin.com/in/",
+                "user": "invictus596"
             },
             "twitter": {
-                "title": "Twitter account",
-                "url": "https://twitter.com/",
-                "user": "abdulkhader"
+                "title": "X (Twitter) profile",
+                "url": "https://x.com/",
+                "user": "invictus596"
             }
         },
         "find_me_also_in": {
