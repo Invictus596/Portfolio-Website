@@ -1,41 +1,58 @@
-# Portfolio macOS
+# Developer Portfolio v2
 
-My personalized macOS-style portfolio website: [invictus596-portfolio.vercel.app](https://invictus596-portfolio.vercel.app/)
+My personalized developer portfolio website, inspired by a code editor design with a snake game on the homepage.
 
-> **Note:** Planning to migrate from this macOS GUI style to a sleek, professional portfolio website.
+**Live Site:** [invictus596-portfolio.vercel.app](https://invictus596-portfolio.vercel.app/)
 
-Inspired by [Renovamen/playground-macos](https://github.com/Renovamen/playground-macos)
+> **Note:** Migrated from macOS GUI-style portfolio to this sleek, professional code editor-inspired design.
 
-Powered by [React](https://reactjs.org/) + [Zustand](https://zustand-demo.pmnd.rs/) + [UnoCSS](https://uno.antfu.me/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/).
+Based on [alexdeploy/developer-portfolio-v2](https://github.com/alexdeploy/developer-portfolio-v2)
 
-## Usage
+Built with [Nuxt.js 3.0](https://nuxt.com/) + [Tailwind CSS](https://tailwindcss.com/) + [Vue.js](https://vuejs.org/)
 
-Install dependencies:
+## Features
+
+- Code editor-inspired UI design
+- Interactive snake game on homepage
+- About me, projects, and contact sections
+- GitHub Gists integration
+- PWA support
+- Responsive design
+
+## Customization
+
+All configuration is centralized in `developer.json`:
+
+- Update your name, role, and bio
+- Add your projects with descriptions and tech stacks
+- Configure social links and contact info
+- Add GitHub Gist IDs for code snippets
+
+## Development
 
 ```bash
-npm install --legacy-peer-deps
+# Install dependencies
+yarn
+
+# Start dev server
+yarn dev
+
+# Build for production
+yarn build
+
+# Preview production build
+yarn preview
 ```
 
-Start dev server:
+## Deploy
 
-```bash
-npm run dev
-```
-
-Build for production:
-
-```bash
-npm run build
-```
-
-## Deploy on Vercel
-
-This project is configured for Vercel deployment. Just connect your GitHub repo to Vercel and it will automatically detect the Vite framework.
+This project is configured for deployment on Vercel or Netlify. Connect your GitHub repo for automatic deployments.
 
 ## Credits
 
-- [Renovamen/playground-macos](https://github.com/Renovamen/playground-macos) - Original project
-- macOS [Big Sur](https://www.apple.com/in/macos/big-sur/) & [Catalina](https://www.apple.com/bw/macos/catalina/) GUI design
+- **Designer:** [@darelova](https://www.behance.net/darelova)
+- **Developer:** [@alexdeploy](https://github.com/alexdeploy)
+- **Original Project:** [developer-portfolio-v2](https://github.com/alexdeploy/developer-portfolio-v2)
 
 ## License
 

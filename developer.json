@@ -1,0 +1,148 @@
+{
+    "name": "Abdul Khader",
+    "logo_name": "abdul-khader",
+    "role": "Data Science & Full-Stack Developer",
+    "about": {
+        "sections": {
+            "professional-info": {
+                "title": "professional-info",
+                "icon": "icons/info-professional.svg",
+                "info": {
+                    "experience": {
+                        "title": "experience",
+                        "description": "<br>As a passionate developer from Hyderabad, India, I have experience building diverse projects ranging from blockchain security solutions to full-stack web applications. My work spans across Rust, TypeScript, Python, and modern web frameworks. <br><br> I specialize in Data Science, blockchain technology (ZK-proofs on Starknet), and building developer tools that solve real-world problems."
+                    },
+                    "hard-skills": {
+                        "title": "hard-skills",
+                        "description": "<br>My technical arsenal includes: <br><br> <strong>Languages:</strong> Rust, TypeScript, Python, JavaScript <br> <strong>Frameworks:</strong> React, Vue.js, Node.js, Express, Next.js <br> <strong>Tools:</strong> Git, Docker, Linux, Vite, Tailwind CSS <br> <strong>Specialties:</strong> Data Science, ZK-Proofs, Blockchain Security, CLI Tools, Full-Stack Development"
+                    },
+                    "soft-skills": {
+                        "title": "soft-skills",
+                        "description": "<br>I bring strong problem-solving abilities and a passion for continuous learning. I thrive in collaborative environments and enjoy tackling complex technical challenges. <br><br> My approach combines analytical thinking with creative solutions, whether I'm building anti-cheat systems or crafting elegant developer experiences."
+                    }
+                }
+            },
+            "personal-info": {
+                "title": "personal-info",
+                "icon": "icons/info-personal.svg",
+                "info": {
+                    "bio": {
+                        "title": "bio",
+                        "description": "<br> About me <br> I am Abdul Khader, a student and developer from Hyderabad, India, with a deep passion for Data Science and software engineering. I love building tools that make a difference - from terminal utilities written in Rust to blockchain security solutions on Starknet. <br><br> When I'm not coding, you'll find me exploring new technologies, contributing to open source, or working on my next innovative project."
+                    },
+                    "interests": {
+                        "title": "interests",
+                        "description": "<br>I am constantly learning and exploring new frontiers in technology. My interests include: <br><br> <strong>Data Science & ML:</strong> Analyzing data patterns and building intelligent systems <br> <strong>Blockchain:</strong> ZK-proofs, smart contracts, and decentralized applications <br> <strong>Developer Tools:</strong> CLI utilities, keyboard automation, and productivity tools <br> <strong>Linux & Open Source:</strong> Contributing to the community and sharing knowledge"
+                    },
+                    "education": {
+                        "title": "education",
+                        "description": "<br>I am currently pursuing my studies in Computer Science at a university in Hyderabad, India. My academic journey complements my practical experience in software development. <br><br> I believe in hands-on learning and have built over 10+ projects spanning various technologies, from Rust-based CLI tools to full-stack web applications with React and Node.js."
+                    }
+                }
+            },
+            "hobbies-info": {
+                "title": "hobbies-info",
+                "icon": "icons/info-hobbies.svg",
+                "info": {
+                    "coding": {
+                        "title": "coding",
+                        "description": "<br>Beyond professional development, I enjoy coding for fun! I love participating in hackathons, contributing to open-source projects, and building side projects that solve everyday problems. <br><br> Some of my favorite personal projects include LAN-TUI (a terminal UI for network scanning), kbrd (a keyboard utility tool), and ZK Anti-Cheat (a revolutionary blockchain-based anti-cheat system)."
+                    },
+                    "gaming": {
+                        "title": "gaming",
+                        "description": "<br>I am a passionate gamer who appreciates both competitive and story-driven games. Gaming has inspired many of my projects, particularly my work on anti-cheat systems. <br><br> I enjoy games that push technical boundaries and explore innovative mechanics, which often sparks ideas for my own development work."
+                    }
+                }
+            }
+        }
+    },
+    "contacts": {
+        "direct": {
+            "title": "contacts",
+            "sources": {
+                "email": "abdulkhader@example.com",
+                "phone": "+91XXXXXXXXXX"
+            }
+        },
+        "social": {
+            "github": {
+                "title": "Github profile",
+                "url": "https://github.com/",
+                "user": "Invictus596"
+            },
+            "linkedin": {
+                "title": "LinkedIn profile",
+                "url": "https://linkedin.com/",
+                "user": "abdul-khader"
+            },
+            "twitter": {
+                "title": "Twitter account",
+                "url": "https://twitter.com/",
+                "user": "abdulkhader"
+            }
+        },
+        "find_me_also_in": {
+            "title": "find-me-also-in",
+            "sources": {
+                "vercel": {
+                    "title": "Vercel Portfolio",
+                    "url": "https://invictus596-portfolio.vercel.app/",
+                    "user": "invictus596"
+                },
+                "github-portfolio": {
+                    "title": "GitHub Repositories",
+                    "url": "https://github.com/Invictus596",
+                    "user": "Invictus596"
+                }
+            }
+        }
+    },
+    "gists": {
+        "1": "83861a67e377633ee8368df01ee3a355",
+        "2": "694c1f32332788a2ac7f37b09e5aa40e"
+    },
+    "projects": {
+        "1": {
+            "title": "_portfolio-website",
+            "description": "macOS GUI-style portfolio website built with React, TypeScript, and Vite. Features interactive desktop environment with multiple apps.",
+            "img": "/images/projects/portfolio.png",
+            "tech": ["React", "TypeScript", "Vite"],
+            "url": "https://github.com/Invictus596/Portfolio-Website"
+        },
+        "2": {
+            "title": "_lan-tui",
+            "description": "Terminal UI for LAN scanning built with Rust. A powerful network diagnostic tool with an intuitive terminal interface.",
+            "img": "/images/projects/lan-tui.png",
+            "tech": ["Rust", "Terminal"],
+            "url": "https://github.com/Invictus596/LAN-TUI"
+        },
+        "3": {
+            "title": "_kbrd",
+            "description": "Keyboard utility tool written in Rust for advanced key mapping and automation.",
+            "img": "/images/projects/kbrd.png",
+            "tech": ["Rust"],
+            "url": "https://github.com/Invictus596/kbrd"
+        },
+        "4": {
+            "title": "_zk-anticheat",
+            "description": "World's first FPS with non-invasive ZK anti-cheat on Starknet. Revolutionary blockchain-based security.",
+            "img": "/images/projects/zk-anticheat.png",
+            "tech": ["Blockchain", "ZK-Proofs", "Starknet"],
+            "url": "https://github.com/Invictus596/ZK-Anti-Cheat"
+        },
+        "5": {
+            "title": "_kindle-dashboard",
+            "description": "A Kindle reading dashboard with data visualization and reading analytics.",
+            "img": "/images/projects/kindle-dashboard.png",
+            "tech": ["Data Viz", "Dashboard"],
+            "url": "https://github.com/Invictus596/Kindle-Dashboard"
+        },
+        "6": {
+            "title": "_chat-agent",
+            "description": "A simple chatbot using Node.js, Express, and OpenAI API for intelligent conversations.",
+            "img": "/images/projects/chat-agent.png",
+            "tech": ["Node.js", "Express", "OpenAI"],
+            "url": "https://github.com/Invictus596/Chat-Agent"
+        }
+    }
+}

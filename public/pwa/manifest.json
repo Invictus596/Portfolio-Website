@@ -1,0 +1,41 @@
+{
+    "name": "Abdul Khader | Data Science & Full-Stack Developer",
+    "short_name": "Abdul Khader",
+    "description": "Portfolio of Abdul Khader - Data Science & Full-Stack Developer from Hyderabad, India",
+    "start_url": "https://invictus596-portfolio.vercel.app/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#010C15",
+    "theme_color": "#010C15",
+    "scope": "https://invictus596-portfolio.vercel.app/",
+    "icons": [{
+        "src": "icons/icon48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon72.png",
+        "sizes": "72x72",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon168.png",
+        "sizes": "168x168",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }, {
+        "src": "icons/icon512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }]
+}
