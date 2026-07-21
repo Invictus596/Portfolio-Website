@@ -66,7 +66,7 @@
           </div>
 
           <!-- folders -->
-          <div :id="'folders-' + section.title" class="hidden"> <!-- <div :id="'folders-' + section.title" :class="currentSection == section.title ? 'block' : 'hidden'"> -->
+          <div :id="'folders-' + section.title" class="hidden">
             <div v-for="(folder, key, index) in config.about.sections[section.title]?.info" :key="key" class="grid grid-cols-2 items-center my-2 font-fira_regular text-menu-text hover:text-white hover:cursor-pointer" @click="focusCurrentFolder(folder)">
               <div class="flex col-span-2">
                 <img id="diple" src="/icons/diple.svg">
@@ -134,7 +134,7 @@
           
           <!-- scroll bar -->
           <div id="scroll-bar" class="h-full border-left hidden lg:flex justify-center py-1">
-            <div id="scroll">
+            <div id="scroll"></div>
           </div>
 
         </div>
