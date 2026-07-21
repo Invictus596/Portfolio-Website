@@ -1,5 +1,5 @@
 <template>
-    <div class="gist mb-5" v-if="dataFetched">
+    <div class="gist mb-5" v-if="dataFetched && gist && gist.owner">
         
         <!-- head info -->
         <div class="flex justify-between my-2">
@@ -32,10 +32,10 @@
         </div>
 
         <highlightjs class="snippet-container" :code="content"/>
-        <div :id="'comment' + gist.id" class="flex hidden justify-between text-menu-text font-fira_retina mt-4 pt-4 border-top">
+        <div :id="'comment' + (gist?.id || '')" class="flex hidden justify-between text-menu-text font-fira_retina mt-4 pt-4 border-top">
             <p id="comment" v-if="comment" class="w-5/6">{{ comment }}</p>
             <p v-else class="w-5/6">No comments.</p>
-            <img src="/icons/close.svg" alt="" class="hover:cursor-pointer" @click="showComment(gist.id)">
+            <img src="/icons/close.svg" alt="" class="hover:cursor-pointer" @click="showComment(gist?.id)">
         </div>
     </div>
 </template>
@@ -123,8 +123,18 @@ export default {
     mounted(){
         fetch(`https://api.github.com/gists/${this.id}`)
             .then(response => response.json())
-            .then(data => this.setValues(data))
-            
+            .then(data => {
+                if (data && data.files) {
+                    this.setValues(data)
+                } else {
+                    console.warn(`Gist ${this.id} not found or API error`)
+                    this.dataFetched = true
+                }
+            })
+            .catch(err => {
+                console.error(`Failed to fetch gist ${this.id}:`, err)
+                this.dataFetched = true
+            })
     },
     methods: {
         async setValues(gist) {
