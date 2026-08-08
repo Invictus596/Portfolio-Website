@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useLayoutEffect, Component } from "react";
+import { Suspense, useEffect, useRef, useLayoutEffect, Component, useState } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import {
   useGLTF,
@@ -760,6 +760,29 @@ function PortfolioScene({
 
 export default function App() {
   const pixelRef = useRef<any>(null);
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia("(max-width: 768px)").matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="mobile-notice">
+        <div className="mobile-notice-title">[ WORK IN PROGRESS ]</div>
+        <div className="mobile-notice-sub">
+          PLEASE USE A DESKTOP BROWSER
+          <br />
+          FOR THE FULL EXPERIENCE.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-full bg-[#0A0D14]">
@@ -801,14 +824,6 @@ export default function App() {
           <Vignette offset={0.1} darkness={1.1} />
         </EffectComposer>
       </Canvas>
-      <div className="mobile-notice">
-        <div className="mobile-notice-title">[ WORK IN PROGRESS ]</div>
-        <div className="mobile-notice-sub">
-          PLEASE USE A DESKTOP BROWSER
-          <br />
-          FOR THE FULL EXPERIENCE.
-        </div>
-      </div>
     </div>
   );
 }
