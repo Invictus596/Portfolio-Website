@@ -824,6 +824,10 @@ export default function App() {
           <Vignette offset={0.1} darkness={1.1} />
         </EffectComposer>
       </Canvas>
+      <div className="scroll-cue">
+        [ SCROLL ]
+        <span className="scroll-cue-arrow">↓</span>
+      </div>
     </div>
   );
 }
