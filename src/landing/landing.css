@@ -1,0 +1,600 @@
+/* ==========================================================================
+   M3 EXPRESSIVE — TYPE SCALE & EXPRESSIVE PRIMITIVES
+   Type styles follow the M3 scale (display / headline / title / body / label)
+   with the *emphasized* variants used only for genuine emphasis moments:
+   hero display, section headlines, CTAs. Sizes are fluid on the web.
+   ========================================================================== */
+
+.m3-display-em {
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 6.6vw, 4.35rem);
+  line-height: 1.02;
+  letter-spacing: -0.042em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.m3-display-sm-em {
+  font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.m3-headline-em {
+  font-size: clamp(1.6rem, 3.4vw, 2.15rem);
+  line-height: 1.16;
+  letter-spacing: -0.024em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.m3-title-lg {
+  font-size: 1.3125rem;
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+}
+
+.m3-title-md {
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.002em;
+  font-weight: 600;
+}
+
+.m3-body-lg {
+  font-size: clamp(1rem, 1.2vw, 1.0625rem);
+  line-height: 1.68;
+  letter-spacing: 0.002em;
+  font-weight: 400;
+}
+
+.m3-body {
+  font-size: 0.9375rem;
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+  font-weight: 400;
+}
+
+.m3-body-sm {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  letter-spacing: 0.006em;
+  font-weight: 400;
+}
+
+/* Labels in M3 are the mono/utility voice — here they double as section
+   eyebrows, which is where the terminal heritage of the 3D site leaks in. */
+.m3-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.m3-mono {
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+}
+
+/* --------------------------------------------------------------------------
+   Fluid shapes — M3 Expressive favours organic, morphing geometry.
+   -------------------------------------------------------------------------- */
+
+.fluid-blob {
+  position: absolute;
+  border-radius: 46% 54% 38% 62% / 54% 41% 59% 46%;
+  filter: blur(72px);
+  will-change: border-radius, transform;
+  animation: fluid-morph 22s var(--md-spring-slow-spatial) infinite alternate;
+}
+
+.fluid-blob--primary {
+  background: radial-gradient(
+    circle at 30% 30%,
+    color-mix(in oklab, var(--color-primary) 42%, transparent),
+    transparent 68%
+  );
+}
+
+.fluid-blob--tertiary {
+  background: radial-gradient(
+    circle at 60% 40%,
+    color-mix(in oklab, var(--color-tertiary) 34%, transparent),
+    transparent 70%
+  );
+  animation-duration: 27s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes fluid-morph {
+  0% {
+    border-radius: 46% 54% 38% 62% / 54% 41% 59% 46%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    border-radius: 62% 38% 58% 42% / 42% 62% 38% 58%;
+    transform: translate3d(2.5%, -2%, 0) rotate(8deg) scale(1.06);
+  }
+  100% {
+    border-radius: 34% 66% 44% 56% / 62% 36% 64% 38%;
+    transform: translate3d(-2%, 1.5%, 0) rotate(-6deg) scale(0.97);
+  }
+}
+
+/* Hairline grid, masked to fade out — gives the dark surface some tooth. */
+.hairline-grid {
+  background-image: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-outline-variant) 45%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-outline-variant) 45%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 10%, transparent 78%);
+}
+
+/* --------------------------------------------------------------------------
+   State layers — M3 expresses interaction through tonal overlays.
+   An inset shadow paints above the container fill and below its content,
+   which is exactly where a state layer belongs.
+   -------------------------------------------------------------------------- */
+
+.m3-state {
+  /* Outer elevation gets its own slot: the interaction layer is an inset
+     shadow and `box-shadow` is a single property, so composing them keeps
+     hover elevation from being clobbered by the state layer. */
+  --m3-elevation: 0 0 0 0 rgb(0 0 0 / 0);
+  box-shadow: inset 0 0 0 999px transparent, var(--m3-elevation);
+}
+
+.m3-state:hover {
+  box-shadow: inset 0 0 0 999px
+    color-mix(in oklab, currentColor 8%, transparent), var(--m3-elevation);
+}
+
+.m3-state:active {
+  box-shadow: inset 0 0 0 999px
+    color-mix(in oklab, currentColor 14%, transparent), var(--m3-elevation);
+}
+
+/* --------------------------------------------------------------------------
+   Expressive shape morphing — the signature M3 Expressive interaction.
+   Soft rounded rect settles into a pill; cards bloom their corners.
+
+   One transition list owns every morphing element so that `border-radius`
+   is explicit (not inherited from a shorthand typo) and gets its own,
+   longer spring:
+     border-radius → 420ms on the spatial spring (~1.5% overshoot)
+     everything else → fast effect/spatial springs
+   -------------------------------------------------------------------------- */
+
+.m3-state,
+.m3-button,
+.m3-card,
+.m3-teaser {
+  transition:
+    border-radius var(--md-spring-shape-duration) var(--md-spring-shape),
+    box-shadow var(--md-spring-fast-effects-duration)
+      var(--md-spring-fast-effects),
+    transform var(--md-spring-default-spatial-duration)
+      var(--md-spring-default-spatial),
+    background-color var(--md-spring-fast-effects-duration)
+      var(--md-spring-fast-effects),
+    border-color var(--md-spring-fast-effects-duration)
+      var(--md-spring-fast-effects),
+    color var(--md-spring-fast-effects-duration) var(--md-spring-fast-effects);
+}
+
+.m3-button {
+  border-radius: 16px;
+}
+
+/*
+ * 24px is a true pill at the 48px M3 target height. It must be a concrete
+ * length, not `--md-shape-full` (9999px): interpolating 16px → 9999px crosses
+ * the entire visible range (16 → 24px) in the first fraction of a percent of
+ * the duration, which is what made the morph read as an instant snap.
+ */
+/*
+ * No `scale()` on the button or the card.
+ *
+ * Scaling the box that holds the label forces the browser to re-rasterise
+ * glyphs at a fractional scale for the entire hover — that is the subpixel
+ * blur. Movement is now supplied by the surrounding <MagneticHover> wrapper,
+ * which translates a composited layer and never touches the text's own
+ * rasterisation box.
+ */
+.m3-button:hover {
+  border-radius: 24px;
+}
+
+.m3-card {
+  border-radius: var(--md-shape-xl);
+  --m3-elevation: 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+.m3-card:hover {
+  border-radius: var(--md-shape-xl-increased);
+  --m3-elevation: 0 14px 34px -10px rgb(0 0 0 / 0.65),
+    0 4px 12px -4px rgb(0 0 0 / 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   Magnetic hover ("gravity")
+   --------------------------------------------------------------------------
+   `--magnet-x/y` are written by useMagnetic.ts (desktop, fine pointer, no
+   reduced-motion only). They are consumed here so CSS owns the easing and the
+   JS never has to fight the style attribute with a transition.
+
+   `will-change` + `backface-visibility` promote the wrapper to its own layer
+   before the pointer arrives, so the first movement is not met with a fresh
+   raster pass. The layer is translated, never scaled, and its rest state is
+   exactly `0px` — crisp text when the pointer leaves.
+   -------------------------------------------------------------------------- */
+
+.magnetic-hover {
+  transform: translate3d(var(--magnet-x, 0px), var(--magnet-y, 0px), 0);
+  transition: transform 260ms var(--md-spring-default-spatial);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Non-interactive large surface: expressive corners, but no morph, because
+   nothing is being pressed. */
+.m3-surface {
+  border-radius: var(--md-shape-xl-increased);
+}
+
+/*
+ * The WebGL teaser is the one deliberately loud control on the page: a
+ * continuous pulse ring plus a magnetic pull toward the pointer (the latter
+ * comes from its <MagneticHover> wrapper, not from this element).
+ */
+.m3-teaser {
+  position: relative;
+  border-radius: 20px;
+}
+
+.m3-teaser:hover {
+  border-radius: var(--md-shape-xl);
+}
+
+.m3-teaser::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid color-mix(in oklab, var(--color-tertiary) 60%, transparent);
+  animation: teaser-pulse 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes teaser-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.025);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m3-button,
+  .m3-button:hover,
+  .m3-card,
+  .m3-card:hover,
+  .m3-teaser,
+  .m3-teaser:hover {
+    border-radius: var(--md-shape-lg);
+  }
+
+  .m3-state,
+  .m3-button,
+  .m3-card,
+  .m3-teaser {
+    transition: none;
+  }
+
+  /* No gravity, no pulse — motion is a preference, not decoration. */
+  .magnetic-hover {
+    transform: none;
+    transition: none;
+  }
+
+  .m3-teaser::before {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Lively entrance. Armed only once JS confirms it can observe, so the page is
+   never blank if scripting fails.
+
+   Pure translate + fade — no scale. Scaling a card as it arrives re-rasterises
+   every glyph in it for the length of the animation, which is exactly the blur
+   this pass removes.
+
+   The pre-reveal rule stops matching the moment `.is-revealed` lands, and the
+   animation uses `backwards` fill (not `both`). That matters: a filling
+   animation would pin `transform` forever and silently kill the magnetic
+   wrapper's movement on hover.
+   -------------------------------------------------------------------------- */
+
+.reveal-ready [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+}
+
+.reveal-ready [data-reveal].is-revealed {
+  animation: fluid-entrance 680ms var(--md-spring-bouncy-spatial)
+    var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes fluid-entrance {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready [data-reveal]:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-ready [data-reveal].is-revealed {
+    animation: none;
+  }
+
+  .fluid-blob {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Terminal input
+   -------------------------------------------------------------------------- */
+
+.terminal-input {
+  caret-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   "Get in touch" ? contact highlight
+   --------------------------------------------------------------------------
+   Two signals for exactly 5s (the timer lives in ContactPulse.tsx): a ripple
+   ring around each button, and a real glow fed through the existing
+   `--m3-elevation` slot so it composes with the M3 state layer instead of
+   overwriting its box-shadow.
+   -------------------------------------------------------------------------- */
+
+.contact-pulse-target {
+  position: relative;
+  border-radius: 24px;
+}
+
+.contact-pulse-target::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1px solid color-mix(in oklab, var(--color-primary) 70%, transparent);
+  box-shadow: 0 0 26px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-pulse-target.is-pulsating::after {
+  animation: contact-pulse 1.25s cubic-bezier(0.25, 0, 0.2, 1) infinite;
+}
+
+.contact-pulse-target.is-pulsating > .m3-button {
+  --m3-elevation: 0 0 0 3px color-mix(in oklab, var(--color-primary) 55%, transparent),
+    0 0 30px color-mix(in oklab, var(--color-primary) 40%, transparent);
+}
+
+@keyframes contact-pulse {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.99);
+  }
+  70% {
+    opacity: 0.2;
+    transform: scale(1.055);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.075);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Terminal easter egg � CRT power-off
+   --------------------------------------------------------------------------
+   The raster is a full-screen sheet that collapses vertically into a bright
+   line, the line collapses horizontally into a dot, and the dot dies. The
+   oversized glow is invisible at full size and becomes the line's bloom.
+   -------------------------------------------------------------------------- */
+
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: #000;
+  color: #c9d4df;
+  overscroll-behavior: contain;
+}
+
+.crt-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #3d4653;
+  box-shadow: 0 0 48px 12px rgb(255 255 255 / 0.75);
+  transform-origin: 50% 50%;
+  will-change: transform, filter;
+  animation: crt-collapse 780ms cubic-bezier(0.62, 0.02, 0.36, 1) forwards;
+  pointer-events: none;
+}
+
+/* Dead signal → bright raster line → dot → black. Starting dim keeps the
+   first frame from reading as a camera flash; the brightness ramp is what
+   sells the collapse. */
+@keyframes crt-collapse {
+  0% {
+    transform: scaleY(1) scaleX(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  42% {
+    transform: scaleY(0.006) scaleX(1);
+    filter: brightness(3.4);
+    opacity: 1;
+  }
+  64% {
+    transform: scaleY(0.006) scaleX(0.014);
+    filter: brightness(4.2);
+    opacity: 1;
+  }
+  82% {
+    transform: scaleY(0.005) scaleX(0.004);
+    filter: brightness(4.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.004) scaleX(0.0015);
+    filter: brightness(4.6);
+    opacity: 0;
+  }
+}
+
+.crt-login {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: min(30rem, 100%);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.9;
+  animation: crt-ui-in 320ms ease-out 820ms both;
+}
+
+@keyframes crt-ui-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.crt-system {
+  color: #8fa3b8;
+  letter-spacing: 0.04em;
+}
+
+.crt-field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.crt-label {
+  min-width: 5.5rem;
+  color: #8fa3b8;
+}
+
+.crt-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.1rem 0;
+  border: 0;
+  border-bottom: 1px solid #24303c;
+  background: transparent;
+  color: #e9eef6;
+  font: inherit;
+  outline: none;
+  caret-color: var(--color-primary);
+}
+
+.crt-input:focus {
+  border-bottom-color: var(--color-primary);
+}
+
+.crt-error {
+  color: #f87171;
+}
+
+.crt-submit {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.crt-submit:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-pulse-target.is-pulsating::after {
+    animation: none;
+    opacity: 0.9;
+  }
+
+  .crt-screen {
+    animation: none;
+    opacity: 0;
+  }
+
+  .crt-login {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   fastfetch readout
+   --------------------------------------------------------------------------
+   Nerd Font glyphs only render when the face is installed; the fixed widths
+   around them keep the key column aligned when the browser falls back to a
+   system symbol font. Ligatures stay off so `--` and box-drawing glyphs in
+   the logo are rendered literally.
+   -------------------------------------------------------------------------- */
+
+.fastfetch-icon,
+.fastfetch-logo {
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono",
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: "calt" 0;
+}

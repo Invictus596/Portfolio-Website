@@ -1,35 +1,83 @@
 @import "tailwindcss";
+@import "./m3/tokens.css";
+@import "./theme/themes.css";
+@import "./landing/landing.css";
 
-:root {
-  color-scheme: dark;
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   margin: 0;
-  background-color: #0a0d14;
-  color: #e0f2fe;
-  font-family: "JetBrainsMono NF", "JetBrains Mono NF", "JetBrains Mono",
-    ui-monospace, SFMono-Regular, Menlo, monospace;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
-  background-color: #38bdf8;
-  color: #0f172a;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0d14;
+  background: var(--color-surface-dim);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--color-surface-container-highest);
   border-radius: 8px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline-variant);
+}
+
+/* Keyboard users get a way past the app bar. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 1rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  border-radius: var(--md-shape-full);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform var(--md-spring-fast-spatial-duration)
+    var(--md-spring-fast-spatial);
+}
+
+.skip-link:focus {
+  transform: translateY(1rem);
+}
+
+/* ==========================================================================
+   3D EXPERIENCE (/3d)
+   These class names are referenced by the WebGL scene, which still uses the
+   original terminal typography and Nord palette.
+   ========================================================================== */
 
 @keyframes terminal-blink {
   0%,
@@ -123,6 +171,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   pointer-events: none;
+  font-family: var(--font-mono);
   font-weight: 700;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
@@ -134,4 +183,14 @@ body {
   font-size: 1.4rem;
   line-height: 1;
   animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor,
+  .scroll-cue,
+  .scroll-cue-arrow,
+  .mobile-notice-title,
+  .mobile-notice-sub {
+    animation: none;
+  }
 }

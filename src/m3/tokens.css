@@ -1,0 +1,163 @@
+/* ==========================================================================
+   M3 EXPRESSIVE — DESIGN TOKENS
+   --------------------------------------------------------------------------
+   The `@theme` block below is the *default* palette: Material You AMOLED Blue
+   (true black surface, #8AB4F8 primary). It exists as the no-JavaScript
+   fallback and must mirror `[data-theme="amoled"]` in src/theme/themes.css.
+
+   The other nine palettes are attribute-scoped overrides of these same
+   custom properties, so every `bg-primary` / `text-on-surface` utility
+   re-themes without a re-render.
+   ========================================================================== */
+
+@theme {
+  /* -------- M3 color roles (default: AMOLED Blue) -------- */
+  --color-primary: #8ab4f8;
+  --color-on-primary: #05214d;
+  --color-primary-container: #0842a0;
+  --color-on-primary-container: #d3e3fd;
+
+  --color-secondary: #bfc6dc;
+  --color-on-secondary: #292e3c;
+  --color-secondary-container: #3e4455;
+  --color-on-secondary-container: #dbe2f9;
+
+  --color-tertiary: #d0bcff;
+  --color-on-tertiary: #352c5c;
+  --color-tertiary-container: #4f378b;
+  --color-on-tertiary-container: #eaddff;
+
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  --color-surface: #000000;
+  --color-surface-dim: #000000;
+  --color-surface-bright: #1f1f1f;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low: #080808;
+  --color-surface-container: #0e0e0e;
+  --color-surface-container-high: #161616;
+  --color-surface-container-highest: #1f1f1f;
+
+  --color-on-surface: #e6e8ee;
+  --color-on-surface-variant: #a8b0be;
+  --color-outline: #767e8b;
+  --color-outline-variant: #23262c;
+
+  --color-inverse-surface: #e6e8ee;
+  --color-inverse-on-surface: #1f1f1f;
+  --color-inverse-primary: #0842a0;
+
+  /* -------- M3 shape scale -------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 28px;
+  --radius-2xl: 32px;
+
+  /* -------- Typography -------- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "JetBrainsMono NF", ui-monospace,
+    SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Semantic aliases so plain CSS can speak M3. */
+  --md-sys-color-primary: var(--color-primary);
+  --md-sys-color-on-primary: var(--color-on-primary);
+  --md-sys-color-primary-container: var(--color-primary-container);
+  --md-sys-color-on-primary-container: var(--color-on-primary-container);
+  --md-sys-color-secondary: var(--color-secondary);
+  --md-sys-color-on-secondary: var(--color-on-secondary);
+  --md-sys-color-secondary-container: var(--color-secondary-container);
+  --md-sys-color-tertiary: var(--color-tertiary);
+  --md-sys-color-on-tertiary: var(--color-on-tertiary);
+  --md-sys-color-tertiary-container: var(--color-tertiary-container);
+  --md-sys-color-on-tertiary-container: var(--color-on-tertiary-container);
+  --md-sys-color-surface: var(--color-surface);
+  --md-sys-color-surface-container: var(--color-surface-container);
+  --md-sys-color-surface-container-high: var(--color-surface-container-high);
+  --md-sys-color-on-surface: var(--color-on-surface);
+  --md-sys-color-on-surface-variant: var(--color-on-surface-variant);
+  --md-sys-color-outline: var(--color-outline);
+  --md-sys-color-outline-variant: var(--color-outline-variant);
+
+  /* Shape tokens (M3 Expressive: increased variants + full pill). */
+  --md-shape-xs: 4px;
+  --md-shape-sm: 8px;
+  --md-shape-md: 12px;
+  --md-shape-lg: 16px;
+  --md-shape-xl: 28px;
+  --md-shape-xl-increased: 32px;
+  --md-shape-full: 9999px;
+
+  /* ------------------------------------------------------------------
+     Motion tokens — spring physics sampled into CSS `linear()` curves.
+     y(t) = 1 - e^(-ζωt)·(cos(ωd·t) + (ζω/ωd)·sin(ωd·t)), ω = √k
+     Effects are critically damped (ζ=1); spatial tokens overshoot ~1.5%.
+     ------------------------------------------------------------------ */
+  --md-spring-fast-effects: linear(0, 0.0673, 0.2064, 0.3601, 0.5018, 0.6217, 0.7181, 0.7929, 0.8495, 0.8917, 0.9227, 0.9452, 0.9613, 0.9728, 0.981, 0.9868, 0.9908, 0.9936, 0.9956, 1);
+  --md-spring-fast-effects-duration: 130ms;
+  --md-spring-default-effects: linear(0, 0.0673, 0.2064, 0.3601, 0.5018, 0.6217, 0.7181, 0.7929, 0.8495, 0.8917, 0.9227, 0.9452, 0.9613, 0.9728, 0.981, 0.9868, 0.9908, 0.9936, 0.9956, 1);
+  --md-spring-default-effects-duration: 200ms;
+  --md-spring-slow-effects: linear(0, 0.0673, 0.2064, 0.3601, 0.5018, 0.6217, 0.7181, 0.7929, 0.8495, 0.8917, 0.9227, 0.9452, 0.9613, 0.9728, 0.981, 0.9868, 0.9908, 0.9936, 0.9956, 1);
+  --md-spring-slow-effects-duration: 283ms;
+
+  --md-spring-fast-spatial: linear(0, 0.1043, 0.3132, 0.5288, 0.708, 0.8386, 0.9244, 0.9752, 1.0016, 1.0127, 1.0152, 1.0134, 1.0102, 1.007, 1.0043, 1.0024, 1.0011, 1.0003, 1, 1);
+  --md-spring-fast-spatial-duration: 162ms;
+  --md-spring-default-spatial: linear(0, 0.1043, 0.3132, 0.5288, 0.708, 0.8386, 0.9244, 0.9752, 1.0016, 1.0127, 1.0152, 1.0134, 1.0102, 1.007, 1.0043, 1.0024, 1.0011, 1.0003, 1, 1);
+  --md-spring-default-spatial-duration: 250ms;
+  --md-spring-slow-spatial: linear(0, 0.1043, 0.3132, 0.5288, 0.708, 0.8386, 0.9244, 0.9752, 1.0016, 1.0127, 1.0152, 1.0134, 1.0102, 1.007, 1.0043, 1.0024, 1.0011, 1.0003, 1, 1);
+  --md-spring-slow-spatial-duration: 354ms;
+  --md-spring-bouncy-spatial: linear(0, 0.2154, 0.6043, 0.9211, 1.0874, 1.1261, 1.0951, 1.0459, 1.0074, 0.988, 0.9842, 0.9885, 0.9947, 0.9994, 1.0016, 1.002, 1.0014, 1.0006, 1, 1);
+  --md-spring-bouncy-spatial-duration: 420ms;
+
+  /* Convenience aliases used by components. */
+  --md-motion-emphasized: var(--md-spring-default-spatial);
+  --md-motion-emphasized-duration: var(--md-spring-default-spatial-duration);
+
+  /* ------------------------------------------------------------------
+     Shape morphs get their own runway.
+
+     Border-radius changes need a longer duration than a translate/scale:
+     the eye reads corner curvature slowly, and a 250ms spring settles
+     before the shape change has been perceived at all. 420ms lets the
+     overshoot land. Easing is the spatial spring (ζ=0.8, ~1.5% overshoot).
+     ------------------------------------------------------------------ */
+  --md-spring-shape: var(--md-spring-default-spatial);
+  --md-spring-shape-duration: 420ms;
+
+  /* M3 elevation (dark surfaces lean on tone, not shadow). */
+  --md-elevation-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px 1px rgb(0 0 0 / 0.25);
+  --md-elevation-2: 0 2px 6px rgb(0 0 0 / 0.45), 0 1px 2px rgb(0 0 0 / 0.3);
+  --md-elevation-3: 0 12px 32px -8px rgb(0 0 0 / 0.6),
+    0 4px 12px -4px rgb(0 0 0 / 0.4);
+}
+
+/* Motion is a preference, not a default. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --md-spring-fast-effects: linear(0, 1);
+    --md-spring-default-effects: linear(0, 1);
+    --md-spring-slow-effects: linear(0, 1);
+    --md-spring-fast-spatial: linear(0, 1);
+    --md-spring-default-spatial: linear(0, 1);
+    --md-spring-slow-spatial: linear(0, 1);
+    --md-spring-bouncy-spatial: linear(0, 1);
+    --md-spring-shape: linear(0, 1);
+    --md-spring-fast-effects-duration: 1ms;
+    --md-spring-default-effects-duration: 1ms;
+    --md-spring-slow-effects-duration: 1ms;
+    --md-spring-fast-spatial-duration: 1ms;
+    --md-spring-default-spatial-duration: 1ms;
+    --md-spring-slow-spatial-duration: 1ms;
+    --md-spring-bouncy-spatial-duration: 1ms;
+    --md-spring-shape-duration: 1ms;
+  }
+}

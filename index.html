@@ -4,14 +4,68 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0d14" />
-    <title>Abdul Khader — Invictus</title>
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Abdul Khader — multi-disciplinary software engineer building web experiences, developer tools, Web3 infrastructure, data systems, and machine learning."
+    />
+    <meta property="og:title" content="Abdul Khader — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Building at the Edge of Software: web experiences, developer tooling, Web3 infrastructure, data, and machine learning."
+    />
+    <meta property="og:type" content="website" />
+    <title>Abdul Khader — Multi-disciplinary Software Engineer</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!--
+      Apply the saved palette before first paint. Keeps the list in sync with
+      src/theme/themes.ts (THEME_STORAGE_KEY / ThemeId).
+    -->
+    <script>
+      (function () {
+        var ids = [
+          "amoled",
+          "catppuccin",
+          "nord",
+          "dracula",
+          "gruvbox",
+          "tokyonight",
+          "onedark",
+          "solarized",
+          "rosepine",
+          "everforest",
+        ];
+        var saved = null;
+        try {
+          saved = window.localStorage.getItem("portfolio-theme");
+        } catch (error) {
+          saved = null;
+        }
+        var theme = ids.indexOf(saved) >= 0 ? saved : "amoled";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+
+    <!--
+      Arm the scroll-reveal system before first paint so nothing flashes.
+      If scripting or IntersectionObserver is unavailable, the class is never
+      added and all content renders in place.
+    -->
+    <script>
+      if (
+        "IntersectionObserver" in window &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        document.documentElement.classList.add("reveal-ready");
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,0 +1,407 @@
+/* ==========================================================================
+   THEME PALETTES — 10 developer colour schemes mapped onto M3 roles
+   --------------------------------------------------------------------------
+   Each block overrides the `@theme` defaults from `m3/tokens.css`, so every
+   utility that compiles to `var(--color-*)` (bg-primary, text-on-surface,
+   border-outline-variant, …) re-themes instantly.
+
+   These rules are deliberately *unlayered*. Tailwind emits `@theme` inside
+   `@layer theme`, and unlayered declarations beat layered ones regardless of
+   specificity — which is exactly what lets a plain attribute selector win.
+
+   Switching is one write: document.documentElement.dataset.theme = id
+   ========================================================================== */
+
+/* Short, human names for the theme API (and for anyone hand-writing CSS). */
+:root,
+[data-theme] {
+  --bg: var(--color-surface);
+  --surface: var(--color-surface-container);
+  --primary: var(--color-primary);
+  --text: var(--color-on-surface);
+  --text-muted: var(--color-on-surface-variant);
+}
+
+/* --------------------------------------------------------------------------
+   1 — Material You · AMOLED Blue (default)
+   True black page, Google's #8AB4F8 primary. Mirrored in `@theme`.
+   -------------------------------------------------------------------------- */
+[data-theme="amoled"] {
+  --color-primary: #8ab4f8;
+  --color-on-primary: #05214d;
+  --color-primary-container: #0842a0;
+  --color-on-primary-container: #d3e3fd;
+
+  --color-secondary: #bfc6dc;
+  --color-on-secondary: #292e3c;
+  --color-secondary-container: #3e4455;
+  --color-on-secondary-container: #dbe2f9;
+
+  --color-tertiary: #d0bcff;
+  --color-on-tertiary: #352c5c;
+  --color-tertiary-container: #4f378b;
+  --color-on-tertiary-container: #eaddff;
+
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  --color-surface: #000000;
+  --color-surface-dim: #000000;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low: #080808;
+  --color-surface-container: #0e0e0e;
+  --color-surface-container-high: #161616;
+  --color-surface-container-highest: #1f1f1f;
+
+  --color-on-surface: #e6e8ee;
+  --color-on-surface-variant: #a8b0be;
+  --color-outline: #767e8b;
+  --color-outline-variant: #23262c;
+}
+
+/* --------------------------------------------------------------------------
+   2 — Catppuccin Mocha
+   -------------------------------------------------------------------------- */
+[data-theme="catppuccin"] {
+  --color-primary: #89b4fa;
+  --color-on-primary: #11111b;
+  --color-primary-container: #2b3a5e;
+  --color-on-primary-container: #cdd6f4;
+
+  --color-secondary: #b4befe;
+  --color-on-secondary: #11111b;
+  --color-secondary-container: #3b3153;
+  --color-on-secondary-container: #e6e0ff;
+
+  --color-tertiary: #cba6f7;
+  --color-on-tertiary: #11111b;
+  --color-tertiary-container: #3d2e55;
+  --color-on-tertiary-container: #f2e6ff;
+
+  --color-error: #f38ba8;
+  --color-on-error: #11111b;
+  --color-error-container: #4a2333;
+  --color-on-error-container: #ffd9e2;
+
+  --color-surface: #1e1e2e;
+  --color-surface-dim: #11111b;
+  --color-surface-container-lowest: #11111b;
+  --color-surface-container-low: #181825;
+  --color-surface-container: #24243a;
+  --color-surface-container-high: #313244;
+  --color-surface-container-highest: #45475a;
+
+  --color-on-surface: #cdd6f4;
+  --color-on-surface-variant: #a6adc8;
+  --color-outline: #7f849c;
+  --color-outline-variant: #45475a;
+}
+
+/* --------------------------------------------------------------------------
+   3 — Nord
+   -------------------------------------------------------------------------- */
+[data-theme="nord"] {
+  --color-primary: #88c0d0;
+  --color-on-primary: #2e3440;
+  --color-primary-container: #3b5261;
+  --color-on-primary-container: #d8eef5;
+
+  --color-secondary: #81a1c1;
+  --color-on-secondary: #2e3440;
+  --color-secondary-container: #3b4252;
+  --color-on-secondary-container: #e5e9f0;
+
+  --color-tertiary: #b48ead;
+  --color-on-tertiary: #2e3440;
+  --color-tertiary-container: #4a3a4a;
+  --color-on-tertiary-container: #f0dfea;
+
+  --color-error: #bf616a;
+  --color-on-error: #2e3440;
+  --color-error-container: #4a2c30;
+  --color-on-error-container: #ffd9dc;
+
+  --color-surface: #2e3440;
+  --color-surface-dim: #242933;
+  --color-surface-container-lowest: #242933;
+  --color-surface-container-low: #2e3440;
+  --color-surface-container: #343b48;
+  --color-surface-container-high: #3b4252;
+  --color-surface-container-highest: #434c5e;
+
+  --color-on-surface: #eceff4;
+  --color-on-surface-variant: #b8c2d1;
+  --color-outline: #6f7f96;
+  --color-outline-variant: #434c5e;
+}
+
+/* --------------------------------------------------------------------------
+   4 — Dracula
+   -------------------------------------------------------------------------- */
+[data-theme="dracula"] {
+  --color-primary: #bd93f9;
+  --color-on-primary: #21222c;
+  --color-primary-container: #453a63;
+  --color-on-primary-container: #e8dcff;
+
+  --color-secondary: #8be9fd;
+  --color-on-secondary: #21222c;
+  --color-secondary-container: #2f4550;
+  --color-on-secondary-container: #d6f8ff;
+
+  --color-tertiary: #ff79c6;
+  --color-on-tertiary: #21222c;
+  --color-tertiary-container: #553047;
+  --color-on-tertiary-container: #ffd9ee;
+
+  --color-error: #ff5555;
+  --color-on-error: #21222c;
+  --color-error-container: #4d2020;
+  --color-on-error-container: #ffd6d6;
+
+  --color-surface: #282a36;
+  --color-surface-dim: #1e1f29;
+  --color-surface-container-lowest: #1e1f29;
+  --color-surface-container-low: #21222c;
+  --color-surface-container: #2f3241;
+  --color-surface-container-high: #44475a;
+  --color-surface-container-highest: #4d5168;
+
+  --color-on-surface: #f8f8f2;
+  --color-on-surface-variant: #b0b6cc;
+  --color-outline: #6d7ba8;
+  --color-outline-variant: #44475a;
+}
+
+/* --------------------------------------------------------------------------
+   5 — Gruvbox Dark
+   -------------------------------------------------------------------------- */
+[data-theme="gruvbox"] {
+  --color-primary: #83a598;
+  --color-on-primary: #282828;
+  --color-primary-container: #2c3f3c;
+  --color-on-primary-container: #d5e8e3;
+
+  --color-secondary: #fabd2f;
+  --color-on-secondary: #282828;
+  --color-secondary-container: #453a1f;
+  --color-on-secondary-container: #f7e7c0;
+
+  --color-tertiary: #d3869b;
+  --color-on-tertiary: #282828;
+  --color-tertiary-container: #452f38;
+  --color-on-tertiary-container: #f2d9e2;
+
+  --color-error: #fb4934;
+  --color-on-error: #282828;
+  --color-error-container: #4a201a;
+  --color-on-error-container: #ffd5d0;
+
+  --color-surface: #282828;
+  --color-surface-dim: #1d2021;
+  --color-surface-container-lowest: #1d2021;
+  --color-surface-container-low: #282828;
+  --color-surface-container: #32302f;
+  --color-surface-container-high: #3c3836;
+  --color-surface-container-highest: #504945;
+
+  --color-on-surface: #ebdbb2;
+  --color-on-surface-variant: #bdae93;
+  --color-outline: #928374;
+  --color-outline-variant: #504945;
+}
+
+/* --------------------------------------------------------------------------
+   6 — Tokyo Night
+   -------------------------------------------------------------------------- */
+[data-theme="tokyonight"] {
+  --color-primary: #7aa2f7;
+  --color-on-primary: #16161e;
+  --color-primary-container: #2a3f6b;
+  --color-on-primary-container: #d0e0ff;
+
+  --color-secondary: #bb9af7;
+  --color-on-secondary: #16161e;
+  --color-secondary-container: #392f57;
+  --color-on-secondary-container: #e8dcff;
+
+  --color-tertiary: #7dcfff;
+  --color-on-tertiary: #16161e;
+  --color-tertiary-container: #204452;
+  --color-on-tertiary-container: #cdf3ff;
+
+  --color-error: #f7768e;
+  --color-on-error: #16161e;
+  --color-error-container: #4a2330;
+  --color-on-error-container: #ffd7df;
+
+  --color-surface: #1a1b26;
+  --color-surface-dim: #16161e;
+  --color-surface-container-lowest: #16161e;
+  --color-surface-container-low: #1a1b26;
+  --color-surface-container: #1f2233;
+  --color-surface-container-high: #292e42;
+  --color-surface-container-highest: #3b4261;
+
+  --color-on-surface: #c0caf5;
+  --color-on-surface-variant: #9aa5ce;
+  --color-outline: #565f89;
+  --color-outline-variant: #2f3549;
+}
+
+/* --------------------------------------------------------------------------
+   7 — One Dark Pro
+   -------------------------------------------------------------------------- */
+[data-theme="onedark"] {
+  --color-primary: #61afef;
+  --color-on-primary: #21252b;
+  --color-primary-container: #2b3f57;
+  --color-on-primary-container: #d3e7ff;
+
+  --color-secondary: #c678dd;
+  --color-on-secondary: #21252b;
+  --color-secondary-container: #3d2f4a;
+  --color-on-secondary-container: #efdcff;
+
+  --color-tertiary: #56b6c2;
+  --color-on-tertiary: #21252b;
+  --color-tertiary-container: #24404a;
+  --color-on-tertiary-container: #d0f0f4;
+
+  --color-error: #e06c75;
+  --color-on-error: #21252b;
+  --color-error-container: #4a2830;
+  --color-on-error-container: #ffd8dc;
+
+  --color-surface: #282c34;
+  --color-surface-dim: #21252b;
+  --color-surface-container-lowest: #21252b;
+  --color-surface-container-low: #24282f;
+  --color-surface-container: #2f343e;
+  --color-surface-container-high: #333842;
+  --color-surface-container-highest: #3e4451;
+
+  --color-on-surface: #abb2bf;
+  --color-on-surface-variant: #8b93a1;
+  --color-outline: #6b7280;
+  --color-outline-variant: #3e4451;
+}
+
+/* --------------------------------------------------------------------------
+   8 — Solarized Dark
+   -------------------------------------------------------------------------- */
+[data-theme="solarized"] {
+  --color-primary: #2aa198;
+  --color-on-primary: #002b36;
+  --color-primary-container: #0c4f4a;
+  --color-on-primary-container: #a9e6df;
+
+  --color-secondary: #268bd2;
+  --color-on-secondary: #002b36;
+  --color-secondary-container: #0f3a52;
+  --color-on-secondary-container: #c3e3ff;
+
+  --color-tertiary: #6c71c4;
+  --color-on-tertiary: #002b36;
+  --color-tertiary-container: #2b2f5e;
+  --color-on-tertiary-container: #d9dbff;
+
+  --color-error: #dc322f;
+  --color-on-error: #002b36;
+  --color-error-container: #4d1f1c;
+  --color-on-error-container: #ffd7d3;
+
+  --color-surface: #002b36;
+  --color-surface-dim: #001f27;
+  --color-surface-container-lowest: #001f27;
+  --color-surface-container-low: #002b36;
+  --color-surface-container: #073642;
+  --color-surface-container-high: #0b3f4d;
+  --color-surface-container-highest: #11495a;
+
+  --color-on-surface: #93a1a1;
+  --color-on-surface-variant: #839496;
+  --color-outline: #586e75;
+  --color-outline-variant: #0b3f4d;
+}
+
+/* --------------------------------------------------------------------------
+   9 — Rosé Pine
+   -------------------------------------------------------------------------- */
+[data-theme="rosepine"] {
+  --color-primary: #c4a7e7;
+  --color-on-primary: #191724;
+  --color-primary-container: #342b45;
+  --color-on-primary-container: #ece0ff;
+
+  --color-secondary: #9ccfd8;
+  --color-on-secondary: #191724;
+  --color-secondary-container: #243b40;
+  --color-on-secondary-container: #d6f4f8;
+
+  --color-tertiary: #ebbcba;
+  --color-on-tertiary: #191724;
+  --color-tertiary-container: #43302f;
+  --color-on-tertiary-container: #ffe5e3;
+
+  --color-error: #eb6f92;
+  --color-on-error: #191724;
+  --color-error-container: #45232f;
+  --color-on-error-container: #ffd9e3;
+
+  --color-surface: #191724;
+  --color-surface-dim: #14121f;
+  --color-surface-container-lowest: #14121f;
+  --color-surface-container-low: #191724;
+  --color-surface-container: #1f1d2e;
+  --color-surface-container-high: #26233a;
+  --color-surface-container-highest: #2f2b45;
+
+  --color-on-surface: #e0def4;
+  --color-on-surface-variant: #908caa;
+  --color-outline: #6e6a86;
+  --color-outline-variant: #26233a;
+}
+
+/* --------------------------------------------------------------------------
+   10 — Everforest
+   -------------------------------------------------------------------------- */
+[data-theme="everforest"] {
+  --color-primary: #a7c080;
+  --color-on-primary: #232a2e;
+  --color-primary-container: #35452f;
+  --color-on-primary-container: #dcefc4;
+
+  --color-secondary: #83c092;
+  --color-on-secondary: #232a2e;
+  --color-secondary-container: #2f4436;
+  --color-on-secondary-container: #d3f0da;
+
+  --color-tertiary: #d699b6;
+  --color-on-tertiary: #232a2e;
+  --color-tertiary-container: #452f3d;
+  --color-on-tertiary-container: #f7dce8;
+
+  --color-error: #e67e80;
+  --color-on-error: #232a2e;
+  --color-error-container: #4a2a2b;
+  --color-on-error-container: #ffd9da;
+
+  --color-surface: #2d353b;
+  --color-surface-dim: #232a2e;
+  --color-surface-container-lowest: #232a2e;
+  --color-surface-container-low: #2d353b;
+  --color-surface-container: #343f44;
+  --color-surface-container-high: #3d484d;
+  --color-surface-container-highest: #475258;
+
+  --color-on-surface: #d3c6aa;
+  --color-on-surface-variant: #9da9a0;
+  --color-outline: #7a8478;
+  --color-outline-variant: #475258;
+}
+
+/* Theme switches are intentionally instant: fading only the page background
+   while text/primary snap is worse than switching everything at once. */
