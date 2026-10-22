@@ -331,6 +331,12 @@
    animation uses `backwards` fill (not `both`). That matters: a filling
    animation would pin `transform` forever and silently kill the magnetic
    wrapper's movement on hover.
+
+   `useRevealObserver` removes the class again once a block is completely
+   off-screen, so this same rule doubles as the rewind state for the next
+   entrance. No exit transition is defined: the reset only ever happens out of
+   sight, and a transition would make a fast scroll back show a half-faded
+   element instead of a clean replay.
    -------------------------------------------------------------------------- */
 
 .reveal-ready [data-reveal]:not(.is-revealed) {
