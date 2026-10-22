@@ -10,6 +10,8 @@ import {
 } from "./fastfetch";
 import { ShutdownOverlay } from "./ShutdownOverlay";
 import { interpretCommand } from "./terminal-commands";
+import { unlockGamer } from "../../theme/gamer";
+import { useTheme } from "../../theme/useTheme";
 
 type Phase = "active" | "shutting-down" | "unlocked";
 
@@ -129,6 +131,7 @@ export function FastfetchOutput({
  */
 export function TerminalCard() {
   const navigate = useNavigate();
+  const { setTheme } = useTheme();
 
   const [phase, setPhase] = useState<Phase>("active");
   const [value, setValue] = useState("");
@@ -371,6 +374,9 @@ export function TerminalCard() {
             <ShutdownOverlay
               onSuccess={() => {
                 setFastfetch(null);
+                // Reward: reveal the 11th palette and wear it immediately.
+                unlockGamer();
+                setTheme("gamer");
                 setPhase("unlocked");
               }}
             />,

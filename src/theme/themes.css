@@ -403,5 +403,179 @@
   --color-outline-variant: #475258;
 }
 
+/* --------------------------------------------------------------------------
+   11 — Gamer RGB (easter egg, unlocked by the terminal login)
+   --------------------------------------------------------------------------
+   OLED black so the moving accents are the only light on the page.
+
+   `--color-primary` deliberately stays a *solid* colour: opacity utilities
+   such as `bg-primary/8` and `border-primary/30` compile against those tokens,
+   and a gradient inside `--color-primary` would break every one of them. The
+   animated gradient is layered on with `background-image` instead, which the
+   tokens never see. `.theme-gamer` is toggled on <html> next to `data-theme`
+   (see useTheme.ts and the pre-paint script in index.html).
+   -------------------------------------------------------------------------- */
+[data-theme="gamer"] {
+  --color-primary: #ff2d95;
+  --color-on-primary: #0a0010;
+  --color-primary-container: #2a0b3d;
+  --color-on-primary-container: #ffe1f4;
+
+  --color-secondary: #00e5ff;
+  --color-on-secondary: #001318;
+  --color-secondary-container: #06303a;
+  --color-on-secondary-container: #c9f7ff;
+
+  --color-tertiary: #b388ff;
+  --color-on-tertiary: #12002b;
+  --color-tertiary-container: #2b1a4d;
+  --color-on-tertiary-container: #ecddff;
+
+  --color-error: #ff4d6d;
+  --color-on-error: #1a0006;
+  --color-error-container: #4a0a18;
+  --color-on-error-container: #ffd9e0;
+
+  --color-surface: #000000;
+  --color-surface-dim: #000000;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low: #050505;
+  --color-surface-container: #0a0a0a;
+  --color-surface-container-high: #121212;
+  --color-surface-container-highest: #1b1b1b;
+
+  --color-on-surface: #f2f2f5;
+  --color-on-surface-variant: #a9a9b4;
+  --color-outline: #6f6f7c;
+  --color-outline-variant: #222228;
+}
+
+[data-theme="gamer"],
+.theme-gamer {
+  --gamer-gradient: linear-gradient(
+    90deg,
+    #ff0000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #ff00ff,
+    #ff0000
+  );
+}
+
+/* 300% wide, so a 0 → 100% sweep walks the whole spectrum across the element.
+   `alternate` makes it glide back instead of snapping to red. */
+@keyframes rgb-shift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Border-only accents (cards, paper band) cannot take a gradient image without
+   losing their radius, so they cycle the hue of the border itself. */
+@keyframes rgb-border-shift {
+  0% {
+    border-color: #ff004c;
+  }
+  16% {
+    border-color: #ffb000;
+  }
+  33% {
+    border-color: #b6ff00;
+  }
+  50% {
+    border-color: #00ffb3;
+  }
+  67% {
+    border-color: #00b3ff;
+  }
+  83% {
+    border-color: #b300ff;
+  }
+  100% {
+    border-color: #ff004c;
+  }
+}
+
+/* Filled accent surfaces: filled buttons, the WebGL teaser, the selected
+   theme row, and any element that paints `bg-primary` outright. */
+.theme-gamer .bg-primary,
+.theme-gamer .bg-primary-container,
+.theme-gamer [role="listbox"] [aria-selected="true"] {
+  background-image: var(--gamer-gradient);
+  background-size: 300% 300%;
+  animation: rgb-shift 3s linear infinite alternate;
+}
+
+/* Those surfaces normally pair with light ink; on the rainbow they need the
+   dark on-primary ink to stay legible. */
+.theme-gamer .bg-primary-container,
+.theme-gamer [role="listbox"] [aria-selected="true"] {
+  color: #08020c;
+}
+
+.theme-gamer [role="listbox"] [aria-selected="true"] svg {
+  color: #08020c;
+}
+
+/* The switcher keeps its dark pill and gains a moving gradient rim: a solid
+   inner layer clipped to the padding box, the gradient clipped to the border
+   box. `background-position` is animated on both layers — the inner one is
+   100% sized, so only the rim moves. */
+.theme-gamer .theme-trigger {
+  border-color: transparent;
+  background-image:
+    linear-gradient(var(--color-surface-container), var(--color-surface-container)),
+    var(--gamer-gradient);
+  background-size: 100% 100%, 300% 300%;
+  background-position: 0 0, 0% 50%;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: rgb-shift 3s linear infinite alternate;
+}
+
+/* Highlight text: the glyphs become the moving gradient. SVG icons are
+   excluded — `background-clip: text` does nothing for a path, and the
+   transparent fill would erase it. */
+.theme-gamer .text-primary:not(svg) {
+  background-image: var(--gamer-gradient);
+  background-size: 300% 300%;
+  animation: rgb-shift 3s linear infinite alternate;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* If a gradient-text element is also a hover surface (the paper badge turns
+   solid primary on hover), fall back to ink so the glyphs do not vanish
+   against their own gradient background. */
+.theme-gamer .text-primary:not(svg):hover {
+  background-image: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--color-primary);
+}
+
+/* Active borders. Scoped by attribute so `border-primary/30` and friends are
+   covered without touching every component. */
+.theme-gamer [class*="border-primary"] {
+  animation: rgb-border-shift 3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-gamer .bg-primary,
+  .theme-gamer .bg-primary-container,
+  .theme-gamer .theme-trigger,
+  .theme-gamer [role="listbox"] [aria-selected="true"],
+  .theme-gamer .text-primary:not(svg),
+  .theme-gamer [class*="border-primary"] {
+    animation: none;
+  }
+}
+
 /* Theme switches are intentionally instant: fading only the page background
    while text/primary snap is worse than switching everything at once. */

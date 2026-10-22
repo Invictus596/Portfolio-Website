@@ -7,7 +7,8 @@ import {
 } from "react";
 import { CheckIcon, ChevronDownIcon } from "../landing/components/icons";
 import { MagneticHover } from "../landing/components/MagneticHover";
-import { THEMES, type ThemeId } from "./themes";
+import { useGamerUnlocked } from "./gamer";
+import { visibleThemes, type ThemeId } from "./themes";
 import { useTheme } from "./useTheme";
 
 /**
@@ -19,6 +20,8 @@ import { useTheme } from "./useTheme";
  */
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
+  const gamerUnlocked = useGamerUnlocked();
+  const themes = visibleThemes(gamerUnlocked);
   const [open, setOpen] = useState(false);
 
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -27,9 +30,9 @@ export function ThemeSwitcher() {
 
   const selectedIndex = Math.max(
     0,
-    THEMES.findIndex((entry) => entry.id === theme),
+    themes.findIndex((entry) => entry.id === theme),
   );
-  const current = THEMES[selectedIndex];
+  const current = themes[selectedIndex];
 
   const close = useCallback(() => {
     setOpen(false);
@@ -65,7 +68,7 @@ export function ThemeSwitcher() {
       return;
     }
 
-    const count = THEMES.length;
+    const count = themes.length;
     const focused = optionRefs.current.indexOf(
       document.activeElement as HTMLButtonElement,
     );
@@ -107,7 +110,7 @@ export function ThemeSwitcher() {
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-label={`Color theme: ${current.label}`}
-          className="flex min-h-10 items-center gap-2 rounded-full border border-outline-variant/60 bg-surface-container/70 py-1.5 pl-2 pr-2.5 text-on-surface-variant transition-colors duration-200 hover:border-outline-variant hover:text-on-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="theme-trigger flex min-h-10 items-center gap-2 rounded-full border border-outline-variant/60 bg-surface-container/70 py-1.5 pl-2 pr-2.5 text-on-surface-variant transition-colors duration-200 hover:border-outline-variant hover:text-on-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <span aria-hidden="true" className="flex items-center -space-x-1">
             {current.swatches.map((swatch, index) => (
@@ -136,7 +139,7 @@ export function ThemeSwitcher() {
           onKeyDown={handleListKeyDown}
           className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,24rem)] w-[16.5rem] overflow-y-auto rounded-[var(--radius-lg)] border border-outline-variant/70 bg-surface-container p-1.5 shadow-[var(--md-elevation-3)]"
         >
-          {THEMES.map((entry, index) => {
+          {themes.map((entry, index) => {
             const active = entry.id === theme;
             return (
               <button

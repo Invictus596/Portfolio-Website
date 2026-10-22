@@ -41,6 +41,7 @@
           "solarized",
           "rosepine",
           "everforest",
+          "gamer",
         ];
         var saved = null;
         try {
@@ -50,6 +51,9 @@
         }
         var theme = ids.indexOf(saved) >= 0 ? saved : "amoled";
         document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "gamer") {
+          document.documentElement.classList.add("theme-gamer");
+        }
       })();
     </script>
 

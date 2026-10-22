@@ -18,7 +18,8 @@ export type ThemeId =
   | "onedark"
   | "solarized"
   | "rosepine"
-  | "everforest";
+  | "everforest"
+  | "gamer";
 
 export type ThemeMeta = {
   id: ThemeId;
@@ -27,6 +28,8 @@ export type ThemeMeta = {
   bg: string;
   /** Three dots shown in the trigger and the option rows. */
   swatches: [string, string, string];
+  /** Hidden from the picker until the terminal easter egg is solved. */
+  locked?: boolean;
 };
 
 export const THEMES: readonly ThemeMeta[] = [
@@ -90,7 +93,24 @@ export const THEMES: readonly ThemeMeta[] = [
     bg: "#2d353b",
     swatches: ["#a7c080", "#2d353b", "#d699b6"],
   },
+  {
+    id: "gamer",
+    label: "Gamer RGB (Unlocked)",
+    bg: "#000000",
+    swatches: ["#ff004c", "#00ff9d", "#00c2ff"],
+    locked: true,
+  },
 ] as const;
+
+/**
+ * The picker list. The gamer palette is hidden until the terminal login has
+ * been solved at least once, so the 11th theme stays an actual secret.
+ */
+export function visibleThemes(gamerUnlocked: boolean): readonly ThemeMeta[] {
+  return gamerUnlocked
+    ? THEMES
+    : THEMES.filter((theme) => !theme.locked);
+}
 
 export const DEFAULT_THEME: ThemeId = "amoled";
 
