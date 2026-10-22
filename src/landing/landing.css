@@ -383,6 +383,28 @@
   caret-color: var(--color-primary);
 }
 
+/* A hairline, theme-agnostic scrollbar for the command scrollback. The panel
+   auto-scrolls to the newest line (TerminalCard.tsx), so the thumb is mostly
+   a "there is more above" hint rather than a primary control. */
+.terminal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+  overscroll-behavior: contain;
+}
+
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.35);
+}
+
 /* --------------------------------------------------------------------------
    "Get in touch" ? contact highlight
    --------------------------------------------------------------------------

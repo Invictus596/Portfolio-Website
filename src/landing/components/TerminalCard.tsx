@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import {
   PALETTE,
   VENOM_LOGO,
@@ -8,6 +9,7 @@ import {
   specRows,
 } from "./fastfetch";
 import { ShutdownOverlay } from "./ShutdownOverlay";
+import { interpretCommand } from "./terminal-commands";
 
 type Phase = "active" | "shutting-down" | "unlocked";
 
@@ -24,6 +26,9 @@ type FastfetchSnapshot = {
 };
 
 const PROMPT = "stormsite@invictus:~";
+
+/** Scrollback cap; the shell panel scrolls, so this is just a memory guard. */
+const MAX_ENTRIES = 60;
 
 /**
  * Renders the `fastfetch` output: logo on the left, spec list on the right.
@@ -99,26 +104,44 @@ export function FastfetchOutput({
 }
 
 /**
- * The 2D counterpart of the terminal inside the 3D scene — now a real
- * terminal with a tiny command state machine.
+ * The 2D counterpart of the terminal inside the 3D scene — a small shell with
+ * a real command state machine.
  *
- *   restart    → hard reload
- *   ls         → "not authorized lol", in red
- *   fastfetch  → clears the scrollback and shows the system readout
- *   shutdown   → hands over to <ShutdownOverlay> (CRT power-off + login)
+ *   help        → the command list
+ *   clear       → wipes the scrollback (intro included), keeps the session log
+ *   whoami      → name | role
+ *   pwd         → the fake project directory
+ *   cd 3d|/3d   → navigates to the WebGL route
+ *   cd ..       → permission denied
+ *   cat X       → resume (opens LinkedIn), paper.md (abstract), or ENOENT
+ *   sudo        → the sudoers refusal, in red
+ *   echo X      → X, verbatim
+ *   history     → numbered list of every command this session
+ *   neofetch    → the "did you mean fastfetch" gag
+ *   ls          → "not authorized lol", in red
+ *   fastfetch   → clears the scrollback and shows the system readout
+ *   restart     → hard reload
+ *   shutdown    → hands over to <ShutdownOverlay> (CRT power-off + login)
  *
  * A successful login flips this card to `unlocked` for the rest of the
  * session: the input unmounts (so the caret is gone and typing is disabled)
  * and the reward line takes its place.
  */
 export function TerminalCard() {
+  const navigate = useNavigate();
+
   const [phase, setPhase] = useState<Phase>("active");
   const [value, setValue] = useState("");
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  /** Commands typed this session — survives `clear`, unlike the scrollback. */
+  const [commandLog, setCommandLog] = useState<string[]>([]);
   const [fastfetch, setFastfetch] = useState<FastfetchSnapshot | null>(null);
+  /** `clear` hides the boot banner so only the prompt is left. */
+  const [showIntro, setShowIntro] = useState(true);
 
   const idRef = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   /** Page navigation time; refined once on mount. */
   const bootedAtRef = useRef<number>(Date.now());
 
@@ -150,6 +173,12 @@ export function TerminalCard() {
     return () => observer.disconnect();
   }, [fastfetchOpen]);
 
+  // Follow the tail of the scrollback, like a real terminal.
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (node) node.scrollTop = node.scrollHeight;
+  }, [history, showIntro]);
+
   const makeEntry = (
     kind: HistoryEntry["kind"],
     text: string,
@@ -161,7 +190,13 @@ export function TerminalCard() {
     setValue("");
     if (!command) return;
 
-    if (command === "fastfetch") {
+    // Logged before dispatch so `history` lists itself, as bash does.
+    const nextLog = [...commandLog, command];
+    setCommandLog(nextLog);
+
+    const result = interpretCommand(command, nextLog);
+
+    if (result.fastfetch) {
       // Scrollback is wiped so the readout always starts at the top of the
       // card — nothing to scroll past, nothing clipped.
       setHistory([]);
@@ -176,27 +211,44 @@ export function TerminalCard() {
     // Anything else drops back to the normal shell view.
     setFastfetch(null);
 
-    if (command === "restart") {
+    if (result.reload) {
       window.location.reload();
       return;
     }
 
-    if (command === "shutdown") {
-      const shutdownEntry = makeEntry("command", command);
-      setHistory((prev) => [...prev, shutdownEntry].slice(-4));
+    if (result.clear) {
+      setHistory([]);
+      setShowIntro(false);
+      return;
+    }
+
+    if (result.shutdown) {
+      setHistory((prev) =>
+        [...prev, makeEntry("command", command)].slice(-MAX_ENTRIES),
+      );
       inputRef.current?.blur();
       setPhase("shutting-down");
       return;
     }
 
-    const next = [makeEntry("command", command)];
-    if (command === "ls") {
-      next.push(makeEntry("output", "not authorized lol", "error"));
-    } else {
-      next.push(makeEntry("output", `command not found: ${command}`, "muted"));
+    if (result.navigateTo) {
+      navigate(result.navigateTo);
+      return;
     }
 
-    setHistory((prev) => [...prev, ...next].slice(-4));
+    if (result.openUrl) {
+      window.open(result.openUrl, "_blank", "noopener,noreferrer");
+    }
+
+    setHistory((prev) =>
+      [
+        ...prev,
+        makeEntry("command", command),
+        ...result.outputs.map((line) =>
+          makeEntry("output", line.text, line.tone),
+        ),
+      ].slice(-MAX_ENTRIES),
+    );
   };
 
   return (
@@ -222,88 +274,94 @@ export function TerminalCard() {
 
         <div
           className={`m3-mono px-5 text-[12.5px] leading-6 ${
-            fastfetch ? "py-4" : "space-y-1.5 py-5"
+            fastfetch ? "py-4" : "py-5"
           }`}
         >
           {fastfetch ? (
             <FastfetchOutput theme={fastfetch.theme} uptime={fastfetch.uptime} />
           ) : (
             <>
-              <p>
-                <span className="text-primary">$</span>{" "}
-                <span className="text-on-surface">whoami</span>
-              </p>
-              <p className="text-on-surface-variant">
-                CSE graduate @ Osmania University
-              </p>
+              <div
+                ref={scrollRef}
+                className="terminal-scroll max-h-[17rem] space-y-1.5 overflow-y-auto pr-1.5"
+              >
+                {showIntro ? (
+                  <>
+                    <p>
+                      <span className="text-primary">$</span>{" "}
+                      <span className="text-on-surface">whoami</span>
+                    </p>
+                    <p className="text-on-surface-variant">
+                      CSE graduate @ Osmania University
+                    </p>
 
-              <p className="pt-3">
-                <span className="text-primary">$</span>{" "}
-                <span className="text-on-surface">currently_building</span>
-              </p>
-              <p className="text-on-surface-variant">
-                <span className="text-tertiary">→</span> trustless systems on
-                Starknet
-              </p>
-              <p className="text-on-surface-variant">
-                <span className="text-tertiary">→</span> zero-knowledge proof
-                infrastructure
-              </p>
-              <p className="text-on-surface-variant">
-                <span className="text-tertiary">→</span> efficient ML models
-              </p>
+                    <p className="pt-3">
+                      <span className="text-primary">$</span>{" "}
+                      <span className="text-on-surface">currently_building</span>
+                    </p>
+                    <p className="text-on-surface-variant">
+                      <span className="text-tertiary">→</span> trustless systems
+                      on Starknet
+                    </p>
+                    <p className="text-on-surface-variant">
+                      <span className="text-tertiary">→</span> zero-knowledge
+                      proof infrastructure
+                    </p>
+                    <p className="text-on-surface-variant">
+                      <span className="text-tertiary">→</span> efficient ML
+                      models
+                    </p>
+                  </>
+                ) : null}
 
-              {history.length > 0 ? (
-                <div className="space-y-1.5 pt-3">
-                  {history.map((entry) =>
-                    entry.kind === "command" ? (
-                      <p key={entry.id}>
-                        <span className="text-primary">$</span>{" "}
-                        <span className="text-on-surface">{entry.text}</span>
-                      </p>
-                    ) : (
-                      <p
-                        key={entry.id}
-                        className={
-                          entry.tone === "error"
-                            ? "text-red-500"
-                            : "text-on-surface-variant/70"
-                        }
-                      >
-                        {entry.text}
-                      </p>
-                    ),
-                  )}
-                </div>
-              ) : null}
+                {history.map((entry) =>
+                  entry.kind === "command" ? (
+                    <p key={entry.id} className="break-words">
+                      <span className="text-primary">$</span>{" "}
+                      <span className="text-on-surface">{entry.text}</span>
+                    </p>
+                  ) : (
+                    <p
+                      key={entry.id}
+                      className={`whitespace-pre-wrap break-words ${
+                        entry.tone === "error"
+                          ? "text-red-500"
+                          : "text-on-surface-variant/70"
+                      }`}
+                    >
+                      {entry.text}
+                    </p>
+                  ),
+                )}
+              </div>
+
+              {phase === "unlocked" ? (
+                <p className="pt-3 text-yellow-400">
+                  thanks for finding the easter egg
+                </p>
+              ) : (
+                <form
+                  className="flex items-center gap-2 pt-3"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    runCommand(value);
+                  }}
+                >
+                  <span className="text-primary">$</span>
+                  <input
+                    ref={inputRef}
+                    value={value}
+                    onChange={(event) => setValue(event.target.value)}
+                    className="terminal-input min-w-0 flex-1 bg-transparent text-[12.5px] text-on-surface outline-none placeholder:text-on-surface-variant/40"
+                    placeholder="type help…"
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    aria-label="Terminal command"
+                  />
+                </form>
+              )}
             </>
-          )}
-
-          {phase === "unlocked" ? (
-            <p className="pt-3 text-yellow-400">
-              thanks for finding the easter egg
-            </p>
-          ) : (
-            <form
-              className="flex items-center gap-2 pt-3"
-              onSubmit={(event) => {
-                event.preventDefault();
-                runCommand(value);
-              }}
-            >
-              <span className="text-primary">$</span>
-              <input
-                ref={inputRef}
-                value={value}
-                onChange={(event) => setValue(event.target.value)}
-                className="terminal-input min-w-0 flex-1 bg-transparent text-[12.5px] text-on-surface outline-none placeholder:text-on-surface-variant/40"
-                placeholder="type a command…"
-                autoComplete="off"
-                autoCapitalize="off"
-                spellCheck={false}
-                aria-label="Terminal command"
-              />
-            </form>
           )}
         </div>
       </div>
