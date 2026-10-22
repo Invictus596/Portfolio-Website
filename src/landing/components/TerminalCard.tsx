@@ -337,7 +337,7 @@ export function TerminalCard() {
 
               {phase === "unlocked" ? (
                 <p className="pt-3 text-yellow-400">
-                  thanks for finding the easter egg
+                  You Unlocked the Easter Egg
                 </p>
               ) : (
                 <form
